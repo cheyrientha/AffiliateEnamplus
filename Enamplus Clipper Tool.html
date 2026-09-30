@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Enamplus Clipper Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#faf7f5;--card:#fff;--ink:#1c1614;--mute:#6f6560;--line:#e6dfda;--brand:#ff3300;--brand-ink:#fff;--soft:#fff0eb;--ok:#0f7b4a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171211;--card:#211a18;--ink:#f6efeb;--mute:#b3a7a1;--line:#3a2f2c;--soft:#3a1d15;--ok:#4cc38a}}
+:root[data-theme="dark"]{--bg:#171211;--card:#211a18;--ink:#f6efeb;--mute:#b3a7a1;--line:#3a2f2c;--soft:#3a1d15;--ok:#4cc38a}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Inter,system-ui,sans-serif;line-height:1.1;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 20px}
+.logo{font:800 26px "Bricolage Grotesque",sans-serif;letter-spacing:-.5px}.logo b{color:var(--brand)}
+.tag{font-size:13px;color:var(--mute)}
+.hero{background:var(--brand);color:var(--brand-ink);border-radius:20px;padding:26px 22px;margin-bottom:20px}
+.hero h1{font-size:clamp(28px,6vw,44px);font-weight:800;max-width:15ch}
+.hero p{margin:10px 0 0;max-width:52ch;opacity:.95}
+nav{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto}
+nav button{flex:1 0 auto;padding:10px 16px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;font:600 14px Inter,sans-serif;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.panel[hidden]{display:none}
+.grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:600;font-size:14px;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.full{grid-column:1/-1}
+.btn{background:var(--brand);color:var(--brand-ink);border:0;border-radius:10px;padding:12px 18px;font:700 15px Inter,sans-serif;cursor:pointer}
+.btn.alt{background:var(--soft);color:var(--brand)}
+.out{margin-top:18px;display:grid;gap:14px}
+.box{border:1px dashed var(--line);border-radius:12px;padding:14px;background:var(--bg)}
+.box h3{font-size:16px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.box pre{margin:0;white-space:pre-wrap;word-break:break-word;font:400 14px/1.5 Inter,sans-serif}
+.msg{font-size:14px;color:var(--brand);min-height:20px;margin-top:8px}
+.big{font:800 40px "Bricolage Grotesque",sans-serif;color:var(--brand)}
+.row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.row:last-child{border:0}
+ul.rules{padding-left:20px;margin:8px 0}ul.rules li{margin:6px 0}
+.check label{display:flex;gap:10px;align-items:flex-start;font-weight:500;margin:8px 0}
+.check input{width:20px;height:20px;margin-top:2px;flex:none}
+.ok{color:var(--ok);font-weight:700}
+footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+@media(prefers-reduced-motion:no-preference){.hero{animation:in .5s ease-out}@keyframes in{from{opacity:0;transform:translateY(8px)}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">enam<b>plus</b> <span class="tag">Clipper</span></div><div class="tag">Prototipe konsep program</div></header>
+
+<section class="hero">
+<h1>Klip video Enamplus. Dapat reward.</h1>
+<p>Buat klip untuk TikTok dan YouTube Shorts, pasang link sumber Enamplus, dan hitung reward Anda dari views dan klik.</p>
+</section>
+
+<nav role="tablist" aria-label="Menu">
+<button role="tab" aria-selected="true" data-t="p1">Buat paket klip</button>
+<button role="tab" aria-selected="false" data-t="p4">Klip otomatis</button>
+<button role="tab" aria-selected="false" data-t="p2">Hitung reward</button>
+<button role="tab" aria-selected="false" data-t="p3">Aturan &amp; hak cipta</button>
+</nav>
+
+<section class="panel" id="p1" role="tabpanel">
+<div class="grid">
+<div class="full"><label for="url">Link video Enamplus</label><input id="url" type="url" placeholder="https://enamplus.liputan6.com/bola/read/..." inputmode="url"></div>
+<div class="full"><label for="jp">Judul postingan</label><input id="jp" placeholder="Judul yang tampil di caption postinganmu"></div>
+<div class="full"><label for="judul">Judul video sumber</label><input id="judul" placeholder="Contoh: Highlight Asian Games 2026: ..."></div>
+<div><label for="plat">Platform</label><select id="plat"><option value="tiktok">TikTok</option><option value="youtube">YouTube Shorts</option></select></div>
+<div><label for="kid">ID Clipper / username</label><input id="kid" placeholder="@usernamekamu"></div>
+<div><label for="mulai">Mulai klip (detik)</label><input id="mulai" type="number" min="0" value="0"></div>
+<div><label for="akhir">Akhir klip (detik)</label><input id="akhir" type="number" min="1" value="30"></div>
+</div>
+<p style="margin:16px 0 0"><button class="btn" id="gen">Buat paket klip</button></p>
+<div class="msg" id="err" role="alert"></div>
+<div class="out" id="out" hidden>
+<div class="box"><h3>Link tracking <button class="btn alt" data-c="o1">Salin</button></h3><pre id="o1"></pre></div>
+<div class="box"><h3>Caption siap pakai <button class="btn alt" data-c="o2">Salin</button></h3><pre id="o2"></pre></div>
+<div class="box"><h3>Teks credit di video <button class="btn alt" data-c="o3">Salin</button></h3><pre id="o3"></pre></div>
+<div class="box"><h3>Ceklis sebelum unggah</h3><div class="check" id="chk"></div><div id="ready" class="ok"></div></div>
+</div>
+</section>
+
+<section class="panel" id="p2" role="tabpanel" hidden>
+<div class="grid">
+<div><label for="v">Total views valid</label><input id="v" type="number" min="0" value="50000"></div>
+<div><label for="r">Reward per 1.000 views (Rp)</label><input id="r" type="number" min="0" value="10000"></div>
+<div><label for="ctr">Rasio klik ke Enamplus (%)</label><input id="ctr" type="number" min="0" step="0.1" value="0.5"></div>
+<div><label for="b">Bonus per klik (Rp)</label><input id="b" type="number" min="0" value="200"></div>
+</div>
+<div style="margin-top:18px"><div class="tag">Estimasi total reward</div><div class="big" id="tot">Rp0</div></div>
+<div id="rows"></div>
+<p class="tag">Angka default hanya simulasi. Tarif resmi ditentukan pengelola program.</p>
+</section>
+
+<section class="panel" id="p4" role="tabpanel" hidden>
+<div class="grid">
+<div class="full"><label for="url2">Link video Enamplus (judul dan link tracking terisi otomatis)</label><input id="url2" type="url" inputmode="url" placeholder="https://enamplus.liputan6.com/bola/read/..."></div>
+<div class="full"><label for="vf">File video sumber (dari Clip Library Enamplus)</label><input id="vf" type="file" accept="video/*"></div>
+<div class="full"><label for="ht">Judul postingan</label><input id="ht" maxlength="90" placeholder="Contoh: Momen dramatis penentu emas Asian Games!"></div>
+<div class="full"><label for="hk">Teks hook di awal video (kosongkan untuk memakai judul postingan)</label><input id="hk" maxlength="70" placeholder="Contoh: Tunggu sampai detik terakhir..."></div>
+<div><label for="dur">Durasi klip (detik)</label><select id="dur"><option>15</option><option selected>30</option><option>45</option><option>60</option></select></div>
+<div><label for="hm">Gaya hook</label><select id="hm"><option value="teaser">Teaser momen puncak + teks</option><option value="text">Teks hook saja</option></select></div>
+<div><label for="cs">Mulai klip (detik)</label><input id="cs" type="number" min="0" value="0"></div>
+<div><label for="pk">Momen puncak untuk teaser (detik)</label><input id="pk" type="number" min="0" value="0"></div>
+</div>
+<p style="margin:16px 0 0;display:flex;gap:10px;flex-wrap:wrap"><button class="btn alt" id="an">Cari momen terbaik otomatis</button><button class="btn" id="mk">Buat klip otomatis</button></p>
+<div class="msg" id="am" role="status"></div>
+<div class="out" id="ao" hidden>
+<div class="box"><h3>Hasil klip (9:16)</h3><video id="pv" controls playsinline style="width:100%;max-width:320px;border-radius:10px;background:#000"></video><p style="margin:10px 0 0"><button class="btn" id="sv">Simpan video</button></p></div>
+<div class="box"><h3>Caption <button class="btn alt" data-c="ac">Salin</button></h3><pre id="ac"></pre></div>
+</div>
+<p class="tag">Pemrosesan berjalan di browser Anda, file tidak diunggah ke server. Hasil berformat MP4 atau WebM sesuai dukungan browser. Sebelum memakai, pastikan video sumber boleh dikliping dan credit Enamplus tetap tampil.</p>
+</section>
+
+<section class="panel" id="p3" role="tabpanel" hidden>
+<h2 style="font-size:22px">Aturan program</h2>
+<ul class="rules">
+<li>Gunakan hanya video sumber dari Enamplus Liputan6 yang tersedia untuk dikliping.</li>
+<li>Cantumkan link sumber Enamplus dan credit "Sumber: Enamplus Liputan6" di setiap klip.</li>
+<li>Jangan mengubah konteks berita, memotong menyesatkan, atau menyebar hoaks.</li>
+<li>Views dari bot, pembelian views, atau akun ganda akan didiskualifikasi.</li>
+<li>Pembayaran hanya untuk views valid setelah proses verifikasi.</li>
+<li>Pengelola dapat menghapus klip atau menangguhkan akun yang melanggar aturan.</li>
+</ul>
+<h2 style="font-size:22px;margin-top:22px">Hak cipta</h2>
+<p>Seluruh video, logo, dan merek Enamplus adalah milik Enamplus Liputan6 dan afiliasinya. Clipper hanya diberi lisensi terbatas, tidak eksklusif, dan dapat dicabut untuk membuat klip dalam program ini. Hak cipta atas video sumber tetap pada pemiliknya.</p>
+</section>
+
+<footer>© 2026 Enamplus Liputan6 · KLY KapanLagi Youniverse. All rights reserved.<br>Halaman ini adalah prototipe konsep dan bukan produk resmi yang sudah diluncurkan.</footer>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected',x===b));
+ ['p1','p2','p3','p4'].forEach(id=>$('#'+id).hidden=id!==b.dataset.t);
+});
+const items=["Video asli dari Enamplus (tanpa mengubah makna berita)","Credit \"Sumber: Enamplus Liputan6\" terlihat di video","Link tracking dipasang (komentar tersemat / bio)","Caption tidak menyesatkan"];
+$('#gen').onclick=()=>{
+ const err=$('#err');err.textContent='';
+ let u;try{u=new URL($('#url').value.trim())}catch(e){err.textContent='Masukkan link yang valid, diawali https://';return}
+ if(u.hostname!=='enamplus.liputan6.com'){err.textContent='Link harus dari enamplus.liputan6.com';return}
+ const s=+$('#mulai').value,e=+$('#akhir').value;
+ if(!(e>s)){err.textContent='Detik akhir harus lebih besar dari detik mulai.';return}
+ const plat=$('#plat').value,kid=($('#kid').value.trim()||'anon').replace(/^@/,'').replace(/\W/g,'');
+ u.searchParams.set('utm_source',plat);u.searchParams.set('utm_medium','clipper');
+ u.searchParams.set('utm_campaign','enamplus-clipper');u.searchParams.set('utm_content',kid);
+ const j=$('#jp').value.trim()||$('#judul').value.trim()||'Video Enamplus';
+ const tags=plat==='tiktok'?'#enamplus #liputan6 #beritaviral #fyp':'#enamplus #liputan6 #shorts #beritaterkini';
+ $('#o1').textContent=u.toString();
+ $('#o2').textContent=j+'\n\nSaksikan versi lengkapnya di Enamplus Liputan6.\nLink: '+u.toString()+'\n\n'+tags;
+ $('#o3').textContent='Sumber: Enamplus Liputan6\nenamplus.liputan6.com\nDurasi klip: '+s+'–'+e+' detik ('+(e-s)+' dtk)';
+ $('#chk').innerHTML=items.map((t,i)=>'<label><input type="checkbox" class="ck"> '+t+'</label>').join('');
+ document.querySelectorAll('.ck').forEach(c=>c.onchange=()=>{$('#ready').textContent=[...document.querySelectorAll('.ck')].every(x=>x.checked)?'Siap diunggah':''});
+ $('#ready').textContent='';$('#out').hidden=false;
+};
+document.querySelectorAll('[data-c]').forEach(b=>b.onclick=async()=>{
+ const t=$('#'+b.dataset.c).textContent;
+ try{await navigator.clipboard.writeText(t);b.textContent='Tersalin'}catch(e){b.textContent='Salin manual'}
+ setTimeout(()=>b.textContent='Salin',1500);
+});
+const rp=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
+function calc(){
+ const v=+$('#v').value||0,r=+$('#r').value||0,c=(+$('#ctr').value||0)/100,b=+$('#b').value||0;
+ const a=v/1000*r,k=v*c,bk=k*b;
+ $('#tot').textContent=rp(a+bk);
+ $('#rows').innerHTML='<div class="row"><span>Reward views</span><b>'+rp(a)+'</b></div><div class="row"><span>Estimasi klik ke Enamplus</span><b>'+Math.round(k).toLocaleString('id-ID')+'</b></div><div class="row"><span>Bonus klik</span><b>'+rp(bk)+'</b></div>';
+}
+['v','r','ctr','b'].forEach(i=>$('#'+i).oninput=calc);calc();
+
+// ===== Klip otomatis =====
+const vEl=document.createElement('video');vEl.playsInline=true;vEl.preload='auto';
+let vUrl=null,vDur=0,outBlob=null,actx=null,adest=null,srcNode=null;
+const am=t=>$('#am').textContent=t;
+$('#vf').onchange=()=>{
+ const f=$('#vf').files[0];if(!f)return;
+ if(vUrl)URL.revokeObjectURL(vUrl);
+ vUrl=URL.createObjectURL(f);vEl.src=vUrl;
+ vEl.onloadedmetadata=()=>{vDur=vEl.duration;am('Video dimuat: '+Math.round(vDur)+' detik. Klik "Cari momen terbaik" atau atur manual.')};
+ vEl.onerror=()=>am('Video tidak bisa dibaca. Coba format MP4.');
+};
+$('#an').onclick=async()=>{
+ const f=$('#vf').files[0];if(!f){am('Pilih file video dulu.');return}
+ if(f.size>200*1024*1024){am('File terlalu besar untuk analisis otomatis (maks 200 MB).');return}
+ am('Menganalisis suara...');
+ try{
+  const ac=new (window.AudioContext||window.webkitAudioContext)();
+  const buf=await ac.decodeAudioData(await f.arrayBuffer());ac.close();
+  const d=buf.getChannelData(0),sr=buf.sampleRate,n=Math.floor(buf.duration),e=[];
+  for(let i=0;i<n;i++){let sum=0;const a=i*sr,b=Math.min(a+sr,d.length),st=Math.max(1,Math.floor((b-a)/2000));let c=0;for(let k=a;k<b;k+=st){sum+=d[k]*d[k];c++}e.push(sum/c)}
+  const L=Math.min(+$('#dur').value,n);let best=0,bs=-1;
+  for(let i=0;i+L<=n;i++){let t=0;for(let k=i;k<i+L;k++)t+=e[k];if(t>bs){bs=t;best=i}}
+  let pk=best,pv=-1;for(let k=best;k<best+L;k++){if(e[k]>pv){pv=e[k];pk=k}}
+  $('#cs').value=best;$('#pk').value=Math.max(0,pk-1);
+  am('Momen terbaik: mulai detik '+best+', puncak sekitar detik '+pk+'. Anda tetap bisa mengubahnya.');
+ }catch(err){am('Analisis suara gagal (video tanpa audio atau format tidak didukung). Atur waktu secara manual.')}
+};
+function wrap(ctx,t,w){const ws=t.split(/\s+/),ls=[];let l='';ws.forEach(x=>{const y=l?l+' '+x:x;if(ctx.measureText(y).width>w&&l){ls.push(l);l=x}else l=y});if(l)ls.push(l);return ls}
+function drawFrame(ctx,W,H,title,showHook){
+ ctx.fillStyle='#120d0c';ctx.fillRect(0,0,W,H);
+ const vw=vEl.videoWidth||W,vh=vEl.videoHeight||H,sc=Math.min(W/vw,H/vh),dw=vw*sc,dh=vh*sc;
+ ctx.drawImage(vEl,(W-dw)/2,(H-dh)/2,dw,dh);
+ if(showHook){
+  ctx.font='800 54px "Bricolage Grotesque",Inter,Arial,sans-serif';
+  const ls=wrap(ctx,title,W-120),bh=ls.length*64+48;
+  ctx.fillStyle='#ff3300';ctx.beginPath();ctx.roundRect?ctx.roundRect(30,90,W-60,bh,22):ctx.rect(30,90,W-60,bh);ctx.fill();
+  ctx.fillStyle='#fff';ctx.textBaseline='top';ls.forEach((x,i)=>ctx.fillText(x,60,114+i*64));
+ }
+ ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(0,H-150,W,150);
+ ctx.fillStyle='#fff';ctx.font='800 40px "Bricolage Grotesque",Inter,Arial,sans-serif';ctx.textBaseline='top';ctx.fillText('enam',40,H-128);
+ const ew=ctx.measureText('enam').width;ctx.fillStyle='#ff3300';ctx.fillText('plus',40+ew,H-128);
+ ctx.fillStyle='#fff';ctx.font='500 26px Inter,Arial,sans-serif';ctx.fillText('Sumber: enamplus.liputan6.com',40,H-72);
+ ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='400 20px Inter,Arial,sans-serif';ctx.fillText('© Enamplus Liputan6',40,H-38);
+}
+function playSeg(a,b,frame){return new Promise(res=>{
+ const go=()=>{vEl.onseeked=null;vEl.play().then(()=>{const t0=performance.now();
+  const tick=()=>{frame((performance.now()-t0)/1000);if(vEl.currentTime>=b||vEl.ended){vEl.pause();res()}else requestAnimationFrame(tick)};tick()}).catch(()=>res())};
+ vEl.onseeked=go;vEl.currentTime=a;
+})}
+$('#mk').onclick=async()=>{
+ if(!vUrl||!vDur){am('Pilih file video dulu.');return}
+ const title=$('#ht').value.trim();if(!title){am('Isi judul postingan.');return}
+ if(!window.MediaRecorder){am('Browser ini belum mendukung perekaman video. Gunakan Chrome, Edge, atau Safari terbaru.');return}
+ const hook=$('#hk').value.trim()||title,L=+$('#dur').value;
+ const s=Math.min(+$('#cs').value||0,Math.max(0,vDur-1)),e=Math.min(s+L,vDur);
+ const pk=Math.min(Math.max(+$('#pk').value||0,0),Math.max(0,vDur-3)),teaser=$('#hm').value==='teaser';
+ const cv=document.createElement('canvas');cv.width=720;cv.height=1280;const ctx=cv.getContext('2d');
+ try{
+  if(!actx){actx=new (window.AudioContext||window.webkitAudioContext)();adest=actx.createMediaStreamDestination();srcNode=actx.createMediaElementSource(vEl);srcNode.connect(adest)}
+  if(actx.state==='suspended')await actx.resume();
+ }catch(x){}
+ const stream=cv.captureStream(30);if(adest)adest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
+ const mt=['video/mp4','video/webm;codecs=vp9,opus','video/webm'].find(t=>MediaRecorder.isTypeSupported(t))||'';
+ const rec=new MediaRecorder(stream,mt?{mimeType:mt,videoBitsPerSecond:4000000}:undefined),parts=[];
+ rec.ondataavailable=ev=>{if(ev.data.size)parts.push(ev.data)};
+ const done=new Promise(r=>rec.onstop=r);
+ $('#mk').disabled=true;$('#ao').hidden=true;am('Membuat klip... jangan tutup halaman ('+(e-s+(teaser?3:0)).toFixed(0)+' detik).');
+ rec.start(250);
+ try{
+  if(teaser)await playSeg(pk,pk+3,()=>drawFrame(ctx,720,1280,hook,true));
+  await playSeg(s,e,t=>drawFrame(ctx,720,1280,hook,!teaser&&t<3));
+ }catch(x){}
+ rec.stop();await done;
+ const ext=(rec.mimeType||mt).includes('mp4')?'mp4':'webm';
+ outBlob=new Blob(parts,{type:rec.mimeType||mt});outBlob.ext=ext;
+ $('#pv').src=URL.createObjectURL(outBlob);
+ const link=(()=>{try{const u=new URL($('#url').value.trim());if(u.hostname!=='enamplus.liputan6.com')return'';u.searchParams.set('utm_source',$('#plat').value);u.searchParams.set('utm_medium','clipper');u.searchParams.set('utm_campaign','enamplus-clipper');u.searchParams.set('utm_content',($('#kid').value.trim()||'anon').replace(/^@/,'').replace(/\W/g,''));return u.toString()}catch(x){return''}})();
+ $('#ac').textContent=title+'\n\nSaksikan versi lengkapnya di Enamplus Liputan6.\nLink: '+(link||'(isi link video di tab "Buat paket klip" untuk link tracking)')+'\n\n#enamplus #liputan6 #beritaviral #fyp';
+ $('#ao').hidden=false;$('#mk').disabled=false;am('Klip selesai. Formatnya '+ext.toUpperCase()+'.');
+};
+$('#sv').onclick=async()=>{
+ if(!outBlob)return;
+ let dl=null;try{dl=await claude.use('downloads')}catch(x){}
+ if(!dl){am('Simpan video: tekan lama atau klik kanan pada pratinjau, lalu pilih simpan video.');return}
+ try{await dl.save({filename:'enamplus-klip.'+outBlob.ext,data:outBlob});am('Video disimpan.')}catch(x){if(x&&x.code!=='declined')am('Penyimpanan gagal. Coba simpan lewat menu klik kanan pada pratinjau.')}
+};
+
+// ===== Isi otomatis dari URL =====
+const SMALL=['di','dari','dan','ke','yang','untuk','pada','dengan','atau','vs'];
+function titleFromSlug(path){
+ const seg=path.split('/').filter(Boolean),i=seg.indexOf('read');
+ if(i<0||!seg[i+2])return '';
+ let sl=decodeURIComponent(seg[i+2]).replace(/(?<=\d)-(?=\d)/g,'§');
+ return sl.split('-').map((w,k)=>{w=w.replace(/§/g,'-');return(k>0&&SMALL.includes(w))?w:w.charAt(0).toUpperCase()+w.slice(1)}).join(' ');
+}
+['jp','judul','ht'].forEach(i=>$('#'+i).addEventListener('input',()=>{$('#'+i).dataset.auto='0'}));
+function setAuto(id,v){const el=$('#'+id);if(!el.value.trim()||el.dataset.auto==='1'){el.value=v;el.dataset.auto='1'}}
+function fromUrl(v,note){
+ let u;try{u=new URL(v.trim())}catch(e){if(note)am('');return}
+ if(u.hostname!=='enamplus.liputan6.com'){if(note)am('Link harus dari enamplus.liputan6.com');return}
+ const t=titleFromSlug(u.pathname);
+ if(t){setAuto('judul',t);setAuto('jp',t);setAuto('ht',t)}
+ if(note)am(t?'Judul diisi otomatis dari link. Anda bisa mengubahnya. Link tracking akan ikut dipasang di caption.':'Link valid, tetapi judul tidak bisa dibaca dari alamatnya. Isi manual.');
+}
+$('#url').addEventListener('input',()=>{$('#url2').value=$('#url').value;fromUrl($('#url').value,false)});
+$('#url2').addEventListener('input',()=>{$('#url').value=$('#url2').value;fromUrl($('#url2').value,true)});
+</script>
+</body>
+</html>
